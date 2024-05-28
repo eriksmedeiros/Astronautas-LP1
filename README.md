@@ -1,2 +1,2 @@
-# ufrn-imd0030-astronautas
 # astronautas
+Sistema de gestão para astronautas em vôos espaciais.
