@@ -25,6 +25,14 @@ void Voo::setPassageiros(Astronauta& astronauta){
     passageiros.push_back(astronauta);
 }
 
+void Voo::rmvPassageiros(Astronauta& astro) {
+    auto it = std::remove_if(passageiros.begin(), passageiros.end(),
+                                [&astro](Astronauta& a) { return a.getCpf() == astro.getCpf(); });
+    if (it != passageiros.end()) {
+        passageiros.erase(it, passageiros.end());
+    }
+}
+
 std::vector<Astronauta> Voo::getPassageiros(){
        
     std::vector<Astronauta>::size_type i;

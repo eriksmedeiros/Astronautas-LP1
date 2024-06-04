@@ -62,7 +62,7 @@ void Comando::addAstronautaEmVoo(){
     }
 
     if(newAstro == nullptr){
-        std::cout << "Astronaura não encontrado." << std::endl;
+        std::cout << "Astronauta não encontrado." << std::endl;
         return;
     }
 
@@ -86,6 +86,79 @@ void Comando::addAstronautaEmVoo(){
     }
 
 }
+
+void Comando::rmvAstronautaDeVoo(){
+    int codigoVoo;
+    std::string cpfAstro;
+
+    std::cout << "Código do Voo: " << std::endl;
+    std::cin >> codigoVoo;
+
+    std::cout << "CPF do Astronauta: " << std::endl;
+    std::cin >> cpfAstro;
+
+    Voo* thisVoo = nullptr;
+    for(auto& v : voos){
+        if(v.getCodigo() == codigoVoo){
+            if(v.getPlanejamento() == "planejamento"){
+                thisVoo = &v;
+                break;
+            } else{
+                std::cout << "Voo não está em fase de planejamento!" << std::endl;
+                return;
+            }
+        }
+    }
+
+     if(thisVoo == nullptr){
+        std::cout << "Voo não encontrado!" << std::endl;
+        return;
+    }
+
+    Astronauta* endAstro = nullptr;
+    for(auto& a : thisVoo->getPassageiros()){
+        
+        if(a.getCpf() == cpfAstro){
+            endAstro = &a;
+            thisVoo->rmvPassageiros(*endAstro);
+            std::cout << "Astronauta removido com sucesso!" << std::endl;
+            return;
+        }
+    }
+
+     if(endAstro == nullptr){
+        std::cout << "Astronauta não encontrado." << std::endl;
+        return;
+    }
+
+    /*for(auto it = v.getPassageiros().begin(); it != v.getPassageiros().end(); it++){
+
+        if(v.getCodigo() == codigoVoo){
+
+            if(v.getPlanejamento() == "planejamento"){
+                thisVoo = &v;
+                v.getPassageiros().erase(it);
+                std::cout << "Astronauta adicionado com sucesso!" << std::endl;
+                return;
+            } else{
+                std::cout << "Voo não está em fase de planejamento!" << std::endl;
+            }
+        }
+        
+        
+    }
+
+
+    Astronauta* endAstro = nullptr;
+    for(auto& a : astronautas){
+        if(a.getCpf() == cpfAstro){
+            endAstro = &a;
+            break;
+        }
+    }*/
+
+}
+
 
 void Comando::printVoosPlanejados()
 {

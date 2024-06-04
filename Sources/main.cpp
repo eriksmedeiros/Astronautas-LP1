@@ -9,7 +9,8 @@ int main(){
                  "\n| 1 - Cadastrar Astronauta                           |" << std::endl;
     std::cout << "| 2 - Cadastrar Voo                                  |" << std::endl;
     std::cout << "| 3 - Adicionar astronauta em voo                    |" << std::endl;
-    std::cout << "| 4 - Listar voos                                    |" << std::endl;
+    std::cout << "| 4 - Remover astronauta de voo                      |" << std::endl;
+    std::cout << "| 5 - Listar voos                                    |" << std::endl;
     std::cout << "| 0 - Sair                                           |" << std::endl;
 
     
@@ -34,6 +35,9 @@ int main(){
             gerencia.addAstronautaEmVoo();
             break;
         case 4:
+            gerencia.rmvAstronautaDeVoo();
+            break;
+        case 5:
             gerencia.printVoosPlanejados();
             break;
         default:

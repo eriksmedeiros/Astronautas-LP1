@@ -20,8 +20,8 @@ public:
     int getCodigo();
 
     //métodos para passageiros
-    // bool getAstronauta(const Astronaura)
     void setPassageiros(Astronauta& astronauta);
+    void rmvPassageiros(Astronauta& astro);
     std::vector<Astronauta> getPassageiros();
 
     std::string getPlanejamento();

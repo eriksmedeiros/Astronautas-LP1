@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 class Astronauta{
     std::string cpf;

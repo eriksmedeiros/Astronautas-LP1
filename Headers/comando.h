@@ -18,6 +18,8 @@ public:
 
     void addAstronautaEmVoo();
 
+    void rmvAstronautaDeVoo();
+
     void printVoosPlanejados();
     
 };
