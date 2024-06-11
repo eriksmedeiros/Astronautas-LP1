@@ -4,7 +4,7 @@
 Voo::Voo() : codigo(0), passageiros() {}
 
 Voo::Voo(int codigo) 
-    : codigo(codigo), emPlanejamento("planejamento"){}
+    : codigo(codigo), status("planejamento"){}
 
 //implementação de metodos para o atributo codigo
 void Voo::setCodigo(int novoCodigo){
@@ -34,17 +34,22 @@ void Voo::rmvPassageiros(Astronauta& astro) {
 }
 
 std::vector<Astronauta> Voo::getPassageiros(){
-       
+    return passageiros;
+}
+
+void Voo::printPassageiros(){
     std::vector<Astronauta>::size_type i;
     for(i = 0 ; i < passageiros.size(); i++){
         std::cout << passageiros[i].getCpf() << " " << passageiros[i].getNome() << " " << passageiros[i].getIdade() << std::endl;
     }
     std::cout << std::endl << std::endl;
-
-    return passageiros;
 }
 
-std::string Voo::getPlanejamento(){
-    return emPlanejamento;
+std::string Voo::getStatus(){
+    return status;
+}
+
+void Voo::setStatus(std::string newStatus){
+    status = newStatus;
 }
 

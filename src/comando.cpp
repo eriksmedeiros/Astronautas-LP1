@@ -40,7 +40,7 @@ void Comando::cadVoo(){
     }
 
     voos.push_back(Voo(codigo));
-    std::cout << "Voo" << codigo << "cadastrado com sucesso!" << std::endl;
+    std::cout << "Voo " << codigo << " cadastrado com sucesso!" << std::endl;
 }
 
 void Comando::addAstronautaEmVoo(){
@@ -56,8 +56,12 @@ void Comando::addAstronautaEmVoo(){
     Astronauta* newAstro = nullptr;
     for(auto& a : astronautas){
         if(a.getCpf() == cpfAstro){
-            newAstro = &a;
-            break;
+            if(a.getStatus()){
+                newAstro = &a;
+                break;
+            } else{
+                std::cout << "Astronauta não está disponível!" << std::endl;
+            }
         }
     }
 
@@ -70,7 +74,7 @@ void Comando::addAstronautaEmVoo(){
     for(auto& v : voos){
         if(v.getCodigo() == codigoVoo){
 
-            if(v.getPlanejamento() == "planejamento"){
+            if(v.getStatus() == "planejamento"){
                 newVoo = &v;
                 v.setPassageiros(*newAstro);
                 std::cout << "Astronauta adicionado com sucesso!" << std::endl;
@@ -100,7 +104,7 @@ void Comando::rmvAstronautaDeVoo(){
     Voo* thisVoo = nullptr;
     for(auto& v : voos){
         if(v.getCodigo() == codigoVoo){
-            if(v.getPlanejamento() == "planejamento"){
+            if(v.getStatus() == "planejamento"){
                 thisVoo = &v;
                 break;
             } else{
@@ -131,32 +135,51 @@ void Comando::rmvAstronautaDeVoo(){
         return;
     }
 
-    /*for(auto it = v.getPassageiros().begin(); it != v.getPassageiros().end(); it++){
+}
 
+void Comando::lancarVoo(){
+    int codigoVoo;
+
+    std::cout << "Código do voo: " << std::endl;
+    std::cin >> codigoVoo;
+
+    Voo *voo = nullptr;
+    for(auto& v : voos){
         if(v.getCodigo() == codigoVoo){
-
-            if(v.getPlanejamento() == "planejamento"){
-                thisVoo = &v;
-                v.getPassageiros().erase(it);
-                std::cout << "Astronauta adicionado com sucesso!" << std::endl;
-                return;
+            if(v.getStatus() == "planejamento"){
+                voo = &v;
+                break;
             } else{
                 std::cout << "Voo não está em fase de planejamento!" << std::endl;
+                return;
             }
         }
-        
-        
+    } 
+
+    if(voo == nullptr){
+        std::cout << "Voo não encontrado!" << std::endl;
+        return;
     }
 
 
-    Astronauta* endAstro = nullptr;
-    for(auto& a : astronautas){
-        if(a.getCpf() == cpfAstro){
-            endAstro = &a;
-            break;
-        }
-    }*/
+    if(voo->getPassageiros().empty()){
+        std::cout << "Não é possível lançar o voo " << codigoVoo << ". Não há astronautas no voo.\n";
+        return;
+    }
 
+    for(auto& a : voo->getPassageiros()){
+        if(!a.getStatus()){
+            std::cout << "Não é possível lançar o voo " << codigoVoo << ". Astronauta " << a.getNome() << " não está disponível.\n";
+            return;
+        }
+    }
+
+    voo->setStatus("Em curso");
+    for (auto& a : voo->getPassageiros()){
+        a.setStatus();
+    }
+
+    std::cout << "Voo " << codigoVoo << " lançado com sucesso!\n";
 }
 
 
@@ -165,11 +188,59 @@ void Comando::printVoosPlanejados()
     std::cout << ">>> Voos em Planejamento:" << std::endl;
     for (Voo v : voos)
     {
-        if(v.getPlanejamento() == "planejamento")
+        if(v.getStatus() == "planejamento")
         {
             std::cout << "> Id: " << v.getCodigo() << ", Passageiros: " << std::endl;
-            v.getPassageiros();
+            v.printPassageiros();
             //printMembers(v.getMembers());
+        }
+    }
+}
+
+void Comando::menu(){
+    std::cout << "------------------ MENU PRINCIPAL ------------------ " << std::endl;
+    std::cout << "|                                                    |"
+                 "\n| 1 - Cadastrar Astronauta                           |" << std::endl;
+    std::cout << "| 2 - Cadastrar Voo                                  |" << std::endl;
+    std::cout << "| 3 - Adicionar astronauta em voo                    |" << std::endl;
+    std::cout << "| 4 - Remover astronauta de voo                      |" << std::endl;
+    std::cout << "| 5 - Lançar voo                                     |" << std::endl;
+    std::cout << "| 6 - Listar voos                                    |" << std::endl;
+    std::cout << "| 0 - Sair                                           |" << std::endl;
+
+    
+    int escolha = -1;
+    while(escolha != 0){
+
+        std::cout << "Escolha: ";
+        std::cin >> escolha;
+
+        switch (escolha)
+        {
+        case 0:
+            std::cout << "Saindo do programa..." << std::endl;
+            break;
+        case 1:
+            cadAstronauta();
+            break;
+        case 2: 
+            cadVoo();
+            break;
+        case 3:
+            addAstronautaEmVoo();
+            break;
+        case 4:
+            rmvAstronautaDeVoo();
+            break;
+        case 5:
+            lancarVoo();
+            break;
+        case 6:
+            printVoosPlanejados();
+            break;
+        default:
+            std::cout << "Opção inválida! Por favor, escolha uma opção válida." << std::endl;
+            break;
         }
     }
 }

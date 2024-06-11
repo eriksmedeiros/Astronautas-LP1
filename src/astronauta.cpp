@@ -6,6 +6,7 @@ Astronauta::Astronauta(std::string cpf, std::string nome, int idade){
     this->cpf = cpf;
     this->nome = nome;
     this->idade = idade;
+    this->status = true;
 }
 
 Astronauta::~Astronauta(){}
@@ -32,4 +33,12 @@ void Astronauta::setIdade(int novaIdade){
 
 int Astronauta::getIdade(){
     return idade;
+}
+
+int Astronauta::getStatus(){
+    return status;
+}
+
+void Astronauta::setStatus(){
+    status = false;
 }

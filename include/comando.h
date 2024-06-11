@@ -20,8 +20,11 @@ public:
 
     void rmvAstronautaDeVoo();
 
+    void lancarVoo();
+
     void printVoosPlanejados();
     
+    void menu();
 };
 
 #endif

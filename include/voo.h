@@ -7,7 +7,7 @@ class Voo{
 private:
     int codigo;
     std::vector<Astronauta> passageiros;
-    std::string emPlanejamento;
+    std::string status;
 
 
 public:
@@ -23,8 +23,11 @@ public:
     void setPassageiros(Astronauta& astronauta);
     void rmvPassageiros(Astronauta& astro);
     std::vector<Astronauta> getPassageiros();
+    void printPassageiros();
+    
 
-    std::string getPlanejamento();
+    std::string getStatus();
+    void setStatus(std::string newStatus);
 };
 
 #endif
