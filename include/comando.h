@@ -23,8 +23,16 @@ public:
     void lancarVoo();
 
     void printVoosPlanejados();
+
+    void printVoosEmCurso();
+
+    void explodirVoo();
     
     void menu();
+
+    void escolhaMenu();
+
+    void limparTela();
 };
 
 #endif

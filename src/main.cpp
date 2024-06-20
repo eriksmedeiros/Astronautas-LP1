@@ -3,7 +3,7 @@
 int main(){
     Comando* iniciar = new Comando;
 
-    iniciar->menu();
+    iniciar->escolhaMenu();
 
     delete iniciar;
      

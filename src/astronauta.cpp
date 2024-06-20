@@ -2,12 +2,7 @@
 
 Astronauta::Astronauta() : cpf(""), nome(""), idade(0) {}
 
-Astronauta::Astronauta(std::string cpf, std::string nome, int idade){
-    this->cpf = cpf;
-    this->nome = nome;
-    this->idade = idade;
-    this->status = true;
-}
+Astronauta::Astronauta(std::string cpf, std::string nome, int idade) : cpf(cpf), nome(nome), idade(idade), status("On") {}
 
 Astronauta::~Astronauta(){}
 
@@ -35,10 +30,10 @@ int Astronauta::getIdade(){
     return idade;
 }
 
-int Astronauta::getStatus(){
+std::string Astronauta::getStatus(){
     return status;
 }
 
-void Astronauta::setStatus(){
-    status = false;
+void Astronauta::setStatus(std::string newStatus){
+    status = newStatus;
 }

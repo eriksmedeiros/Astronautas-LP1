@@ -10,7 +10,7 @@ class Astronauta{
     std::string cpf;
     std::string nome;
     int idade;
-    bool status;
+    std::string status;
 
 public:
     Astronauta();
@@ -27,7 +27,7 @@ public:
     void setIdade(int novaIdade);
     int getIdade();
 
-    int getStatus();
-    void setStatus();
+    std::string getStatus();
+    void setStatus(std::string newStatus);
 };
 #endif
