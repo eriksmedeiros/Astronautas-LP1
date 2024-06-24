@@ -1,4 +1,4 @@
-#include "comando.h"
+#include "../include/comando.h"
 
 int main(){
     Comando* iniciar = new Comando;

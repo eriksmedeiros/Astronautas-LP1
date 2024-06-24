@@ -1,6 +1,6 @@
 PROG = bin/exe
 CC = g++
-CPPFLAGS = -Wall -pedantic -I./include
+CPPFLAGS = -Wall -pedantic
 OBJDIR = obj
 SRCDIR = src
 OBJS = $(OBJDIR)/main.o $(OBJDIR)/comando.o $(OBJDIR)/voo.o $(OBJDIR)/astronauta.o

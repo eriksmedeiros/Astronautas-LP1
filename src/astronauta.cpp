@@ -1,6 +1,4 @@
-#include "astronauta.h"
-
-Astronauta::Astronauta() : cpf(""), nome(""), idade(0) {}
+#include "../include/astronauta.h"
 
 Astronauta::Astronauta(std::string cpf, std::string nome, int idade) : cpf(cpf), nome(nome), idade(idade), status("On") {}
 

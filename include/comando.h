@@ -26,7 +26,15 @@ public:
 
     void printVoosEmCurso();
 
+    void printVoosFinalizados();
+
     void explodirVoo();
+
+    void finalizarVoo();
+
+    void filtrarMortos(Astronauta astro);
+
+    void printAstroMortos();
     
     void menu();
 

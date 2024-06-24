@@ -28,6 +28,10 @@ public:
 
     std::string getStatus();
     void setStatus(std::string newStatus);
+
+    void lancamento();
+    void explosao();
+    void finalizar();
 };
 
 #endif

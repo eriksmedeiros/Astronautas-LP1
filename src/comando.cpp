@@ -1,4 +1,4 @@
-#include "comando.h"
+#include "../include/comando.h"
 
 void Comando::cadAstronauta(){
     
@@ -60,6 +60,7 @@ void Comando::addAstronautaEmVoo(){
                 break;
             } else{
                 std::cout << "Astronauta não está disponível!" << std::endl;
+                return;
             }
         }
     }
@@ -83,6 +84,7 @@ void Comando::addAstronautaEmVoo(){
                 return;
             } else{
                 std::cout << "Voo não está em fase de planejamento!" << std::endl;
+                return;
             }
         }
     }
@@ -97,10 +99,10 @@ void Comando::rmvAstronautaDeVoo(){
     int codigoVoo;
     std::string cpfAstro;
 
-    std::cout << "Código do Voo: " << std::endl;
+    std::cout << "Código do Voo: ";
     std::cin >> codigoVoo;
 
-    std::cout << "CPF do Astronauta: " << std::endl;
+    std::cout << "CPF do Astronauta: ";
     std::cin >> cpfAstro;
 
     Voo* thisVoo = nullptr;
@@ -170,57 +172,21 @@ void Comando::lancarVoo(){
     }
 
     for(auto& a : voo->getPassageiros()){
-        if(a.getStatus() != "On"){
-            std::cout << "Não é possível lançar o voo " << codigoVoo << ". Astronauta " << a.getNome() << " não está disponível.\n";
-            return;
-        }
-    }
 
-    voo->setStatus("curso");
-    for (auto& a : voo->getPassageiros()){
-        a.setStatus("Off");
-    }
+        for(auto& astro : astronautas){
 
-    std::cout << "Voo " << codigoVoo << " lançado com sucesso!\n";
-}
+            if(astro.getStatus() != "On"){
+                std::cout << "Não é possível lançar o voo " << codigoVoo << ". Astronauta " << a.getNome() << " não está disponível.\n";
+                return;
+            }
 
-
-void Comando::printVoosPlanejados()
-{
-    std::cout << "Voos em Planejamento:" << std::endl;
-    for(auto&v : voos){
-        if(v.getStatus() == "planejamento") {
-            std::cout << "Código do voo: " << v.getCodigo() << std::endl;
-            std::cout << "Astronautas a bordo:" << std::endl;
-            std::cout << " CPF   -   Nome   -   Idade" << std::endl;
-            for(auto& a : v.getPassageiros()){
-                std::cout << " " << a.getCpf() << "       " << a.getNome() << "       " << a.getIdade() << std::endl;
+            if(a.getCpf() == astro.getCpf()){
+                astro.setStatus("off");
             }
         }
     }
-}
 
-void Comando::printVoosEmCurso(){
-    std::cout << "Voos em Curso:" << std::endl;
-    for(auto&v : voos){
-        if(v.getStatus() == "curso") {
-            std::cout << "Código do voo: " << v.getCodigo() << std::endl;
-            std::cout << "Astronautas a bordo:" << std::endl;
-            std::cout << " CPF   -   Nome   -   Idade" << std::endl;
-            for(auto& a : v.getPassageiros()){
-                std::cout << " " << a.getCpf() << "       " << a.getNome() << "       " << a.getIdade() << std::endl;
-            }
-        }
-    }
-}
-
-void Comando::printVoosFinalizados(){
-    std::cout << "Voos em Curso:" << std::endl;
-    for(auto&v : voos){
-        if(v.getStatus() == "finalizado"){
-            
-        }
-    }
+    voo->lancamento();
 }
 
 void Comando::explodirVoo(){
@@ -247,14 +213,140 @@ void Comando::explodirVoo(){
         return;
     }
 
-    voo->setStatus("Explodiu");
-    for (auto& a : voo->getPassageiros()){
-        a.setStatus("Morto");
+    for(auto& a : voo->getPassageiros()){
+        for(auto& astro : astronautas){
+            if(a.getCpf() == astro.getCpf()){
+                astro.setStatus("morto");
+            }
+        }
     }
 
-    std::cout << "O voo " << codigoVoo << " explodiu com sucesso!" << std::endl;
+    voo->explosao();
 }
 
+void Comando::finalizarVoo(){
+    int codigoVoo;
+
+    std::cout << "Código do voo: ";
+    std::cin >> codigoVoo;
+
+    Voo *voo = nullptr;
+    for(auto& v : voos){
+        if(v.getCodigo() == codigoVoo){
+            if(v.getStatus() == "curso"){
+                voo = &v;
+                break;
+            } else{
+                std::cout << "Voo não está em curso!" << std::endl;
+                return;
+            }
+        }
+    } 
+
+    if(voo == nullptr){
+        std::cout << "Voo não encontrado!" << std::endl;
+        return;
+    }
+
+    for(auto& a : voo->getPassageiros()){
+        for(auto& astro : astronautas){
+                if(a.getCpf() == astro.getCpf()){
+                    astro.setStatus("On");
+                }
+            }
+    }
+
+    voo->finalizar();
+}
+
+void Comando::printVoosPlanejados()
+{
+    std::cout << "Voos em Planejamento:" << std::endl;
+    for(auto&v : voos){
+        if(v.getStatus() == "planejamento") {
+            std::cout << "Código do voo: " << v.getCodigo() << std::endl;
+            std::cout << "Astronautas a bordo:" << std::endl;
+            std::cout << " C P F   -   N o m e   -   I d a d e   -   S t a t u s" << std::endl;
+            for(auto& a : v.getPassageiros()){
+                std::cout << " " << a.getCpf() << "       " << a.getNome() << "       " << a.getIdade() << "       " << a.getStatus() << std::endl;
+                std::cout << std::endl;            
+            }
+        }
+    }
+}
+
+void Comando::printVoosEmCurso(){
+    std::cout << "Voos em Curso:" << std::endl;
+    for(auto&v : voos){
+        if(v.getStatus() == "curso") {
+            std::cout << "Código do voo: " << v.getCodigo() << std::endl;
+            std::cout << "Astronautas a bordo:" << std::endl;
+            std::cout << " C P F   -   N o m e   -   I d a d e   -   S t a t u s" << std::endl;
+            for(auto& a : v.getPassageiros()){
+                std::cout << " " << a.getCpf() << "       " << a.getNome() << "       " << a.getIdade() << "       " << a.getStatus() << std::endl;
+                std::cout << std::endl;
+            }
+        }
+    }
+}
+
+void Comando::printVoosFinalizados(){
+    std::cout << "Voos finalizados:" << std::endl;
+    for(auto&v : voos){
+        if(v.getStatus() == "finalizado"){
+            std::cout << "Código do voo: " << v.getCodigo() << std::endl;
+            std::cout << "Status: " << v.getStatus() << std::endl;
+            std::cout << "Astronautas a bordo:" << std::endl;
+            std::cout << " C P F   -   N o m e   -   I d a d e   -   S t a t u s" << std::endl;
+            for(auto& a : v.getPassageiros()){
+                std::cout << " " << a.getCpf() << "       " << a.getNome() << "       " << a.getIdade() << "       " << a.getStatus() << std::endl;
+                std::cout << std::endl;
+
+            }
+        } else if(v.getStatus() == "explodiu"){
+            std::cout << "Código do voo: " << v.getCodigo() << std::endl;
+            std::cout << "Status: " << v.getStatus() << std::endl;
+            std::cout << "Astronautas a bordo:" << std::endl;
+            std::cout << " C P F   -   N o m e   -   I d a d e   -   S t a t u s" << std::endl;
+            for(auto& a : v.getPassageiros()){
+                std::cout << " " << a.getCpf() << "       " << a.getNome() << "       " << a.getIdade() << "       " << a.getStatus() << std::endl;
+                std::cout << std::endl;
+            }
+        }
+    }
+}
+
+void Comando::filtrarMortos(Astronauta astro){
+    bool found = false;
+    for(auto& v : voos){    
+        for(auto& a : v.getPassageiros()){
+            if(astro.getCpf() == a.getCpf()){
+                if(!found){
+                    std::cout << "Voos que participou: " << std::endl;
+                    found = true; 
+                }
+                std::cout << " " << v.getCodigo() << std::endl;
+            }
+        }
+    }
+    if(!found){
+        std::cout << " Nenhum voo encontrado." << std::endl;       
+    }
+}
+
+void Comando::printAstroMortos(){
+    std::cout << "Astronautas Mortos:" << std::endl;
+    std::cout << " C P F   -   N o m e   -   I d a d e   -   S t a t u s" << std::endl;
+
+    for(auto& a : astronautas){
+        if(a.getStatus() == "morto"){
+            std::cout << " " << a.getCpf() << "       " << a.getNome() << "       " << a.getIdade() << "       " << a.getStatus() << std::endl;
+            std::cout << std::endl;
+            filtrarMortos(a);
+            std::cout << std::endl;
+        }
+    }
+}
 
 void Comando::limparTela(){
     #ifdef _WIN32
@@ -265,16 +357,18 @@ void Comando::limparTela(){
 }
 
 void Comando::menu(){
-    std::cout << "------------------ MENU PRINCIPAL ------------------ " << std::endl;
-    std::cout << "|                                                    |" << std::endl;
+    std::cout << " ----------------- MENU PRINCIPAL -------------------" << std::endl;
     std::cout << "| 1 - Cadastrar Astronauta                           |" << std::endl;
     std::cout << "| 2 - Cadastrar Voo                                  |" << std::endl;
     std::cout << "| 3 - Adicionar astronauta em voo                    |" << std::endl;
     std::cout << "| 4 - Remover astronauta de voo                      |" << std::endl;
     std::cout << "| 5 - Lançar voo                                     |" << std::endl;
     std::cout << "| 6 - Explodir voo                                   |" << std::endl;
-    std::cout << "| 7 - Listar voos planejados                         |" << std::endl;
-    std::cout << "| 8 - Listar voos em curso                           |" << std::endl;
+    std::cout << "| 7 - Finalizar voo                                  |" << std::endl;
+    std::cout << "| 8 - Listar voos planejados                         |" << std::endl;
+    std::cout << "| 9 - Listar voos em curso                           |" << std::endl;
+    std::cout << "| 10 - Listar voos finalizados                       |" << std::endl;
+    std::cout << "| 11 - Listar astronautas mortos                     |" << std::endl;
     std::cout << "| 0 - Sair                                           |" << std::endl;
     std::cout << " --------------------------------------------------- " << std::endl;
 }
@@ -313,10 +407,19 @@ void Comando::escolhaMenu(){
             explodirVoo();
             break;
         case 7:
-            printVoosPlanejados();
+            finalizarVoo();
             break;
         case 8:
+            printVoosPlanejados();
+            break;
+        case 9:
             printVoosEmCurso();
+            break;
+        case 10:
+            printVoosFinalizados();
+            break;
+        case 11:
+            printAstroMortos();
             break;
         default:
             std::cout << "Opção inválida! Por favor, escolha uma opção válida." << std::endl;

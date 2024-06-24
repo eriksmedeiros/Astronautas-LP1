@@ -1,4 +1,4 @@
-#include "voo.h"
+#include "../include/voo.h"
 
 //implementação do construtor
 Voo::Voo() : codigo(0), passageiros() {}
@@ -15,11 +15,6 @@ int Voo::getCodigo(){
     return codigo;
 }
 
-//implementação de metodos para o atributo passageiros
-
-/*const std::vector<Astronauta> &Voo::getPassageiros() const {
-    return passageiros;
-}*/
 
 void Voo::setPassageiros(Astronauta& astronauta){  
     passageiros.push_back(astronauta);
@@ -53,3 +48,29 @@ void Voo::setStatus(std::string newStatus){
     status = newStatus;
 }
 
+void Voo::lancamento(){
+    setStatus("curso");
+    for(auto& a : passageiros){
+        a.setStatus("off");
+    }
+
+    std::cout << "Voo " << getCodigo() << " lançado com sucesso!\n";
+}
+
+void Voo::explosao(){
+    setStatus("explodiu");
+    for(auto& a : passageiros){
+        a.setStatus("morto");
+    }
+
+    std::cout << "O Voo " << getCodigo() << " explodiu!\n";
+}
+
+void Voo::finalizar(){
+    setStatus("finalizado");
+    for (auto& a : passageiros){
+        a.setStatus("On");
+    }
+
+    std::cout << "O voo " << getCodigo() << " foi finalizado com sucesso!" << std::endl;
+}

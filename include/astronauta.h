@@ -13,7 +13,6 @@ class Astronauta{
     std::string status;
 
 public:
-    Astronauta();
     Astronauta(std::string cpf, std::string nome, int idade);
 
     ~Astronauta();
