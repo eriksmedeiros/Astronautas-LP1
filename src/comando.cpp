@@ -268,7 +268,7 @@ void Comando::printVoosPlanejados()
             std::cout << "Astronautas a bordo:" << std::endl;
             std::cout << " C P F    -    N o m e    -    I d a d e" << std::endl;
             for(auto& a : v.getPassageiros()){
-                std::cout << " " << a.getCpf() << "       " << a.getNome() << "       " << a.getIdade() << std::endl;
+                std::cout << " " << a.getCpf() << "         " << a.getNome() << "         " << a.getIdade() << std::endl;
                 std::cout << std::endl;            
             }
         }
@@ -283,7 +283,7 @@ void Comando::printVoosEmCurso(){
             std::cout << "Astronautas a bordo:" << std::endl;
             std::cout << " C P F    -    N o m e    -    I d a d e" << std::endl;
             for(auto& a : v.getPassageiros()){
-                std::cout << " " << a.getCpf() << "       " << a.getNome() << "       " << a.getIdade() << std::endl;
+                std::cout << " " << a.getCpf() << "         " << a.getNome() << "         " << a.getIdade() << std::endl;
                 std::cout << std::endl;
             }
         }
@@ -299,7 +299,7 @@ void Comando::printVoosFinalizados(){
             std::cout << "Astronautas a bordo:" << std::endl;
             std::cout << " C P F    -    N o m e    -    I d a d e" << std::endl;
             for(auto& a : v.getPassageiros()){
-                std::cout << " " << a.getCpf() << "       " << a.getNome() << "       " << a.getIdade() << std::endl;
+                std::cout << " " << a.getCpf() << "         " << a.getNome() << "         " << a.getIdade() << std::endl;
                 std::cout << std::endl;
 
             }
@@ -309,7 +309,7 @@ void Comando::printVoosFinalizados(){
             std::cout << "Astronautas a bordo:" << std::endl;
             std::cout << " C P F    -    N o m e    -    I d a d e" << std::endl;
             for(auto& a : v.getPassageiros()){
-                std::cout << " " << a.getCpf() << "       " << a.getNome() << "       " << a.getIdade() << std::endl;
+                std::cout << " " << a.getCpf() << "         " << a.getNome() << "         " << a.getIdade() << std::endl;
                 std::cout << std::endl;
             }
         }
@@ -318,7 +318,7 @@ void Comando::printVoosFinalizados(){
 
 void Comando::filtrarMortos(Astronauta astro){
     bool found = false;
-    for(auto& v : voos){    
+    for(auto& v : voos){     
         for(auto& a : v.getPassageiros()){
             if(astro.getCpf() == a.getCpf()){
                 if(!found){
@@ -340,7 +340,7 @@ void Comando::printAstroMortos(){
 
     for(auto& a : astronautas){
         if(a.getStatus() == "morto"){
-            std::cout << " " << a.getCpf() << "       " << a.getNome() << "       " << a.getIdade() << std::endl;
+            std::cout << " " << a.getCpf() << "         " << a.getNome() << "         " << a.getIdade() << std::endl;
             std::cout << std::endl;
             filtrarMortos(a);
             std::cout << std::endl;
