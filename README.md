@@ -5,7 +5,7 @@ Deverá ser criado um sistema de gestão de astronautas e voos espaciais.
 ## Como Compilar
 Em um terminal utilize o comando a seguir:
 ```
-Make
+make
 ```
 
 ## Como executar
